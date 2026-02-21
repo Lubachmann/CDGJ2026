@@ -43,3 +43,6 @@ func _physics_process(delta: float) -> void:
 
 func ChangeJumpMultiplier(newJumpMultiplier: float):
 	jumpMultiplier = newJumpMultiplier
+	
+func DamageTaken():
+	print("Ouch")

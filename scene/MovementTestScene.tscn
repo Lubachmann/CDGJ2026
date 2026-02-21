@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://ccc3cxph12xg1" path="res://scene/player.tscn" id="1_64b6k"]
 [ext_resource type="PackedScene" uid="uid://csu03uhfqyr3a" path="res://scene/cube_variants/trampolineCube.tscn" id="2_3m402"]
+[ext_resource type="PackedScene" uid="uid://cdlfcrfd1kh7m" path="res://scene/cube_variants/spikeBlocks.tscn" id="3_4elfj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_37kl0"]
 size = Vector2(248, 153)
@@ -19,3 +20,6 @@ shape = SubResource("RectangleShape2D_37kl0")
 
 [node name="TrampolineCube" parent="." unique_id=1805788512 instance=ExtResource("2_3m402")]
 position = Vector2(567, 391)
+
+[node name="SpikeBlocks" parent="." unique_id=1926630648 instance=ExtResource("3_4elfj")]
+position = Vector2(753, 376)
