@@ -67,7 +67,7 @@ func ChangeJumpMultiplier(newJumpMultiplier: float):
 	jumpMultiplier = newJumpMultiplier
 	
 func DamageTaken():
-	add_child(gameoverScene.instantiate())
+	get_parent().add_child(gameoverScene.instantiate())
 		
 func PickupGoalToken():
 	print("Yippee")

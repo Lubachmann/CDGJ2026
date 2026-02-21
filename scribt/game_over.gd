@@ -10,20 +10,44 @@ var dummyData = [
 var BaseHbox
 var ScoreBoardRoot
 
+func ReadScoreFromFile():
+	var file = FileAccess.open("user://highscores.json", FileAccess.READ)
+	if file == null:
+		push_error("Failed to open file")
+		return []
+
+	var json_string = file.get_as_text()
+	file.close()
+
+	var json = JSON.new()
+	var result = json.parse(json_string)
+
+	if result != OK:
+		push_error("JSON parse error")
+		return []
+
+	return json.data
+	
+func SaveScoreToFile(data: Array[Dictionary]):
+	var existingData: Array[Dictionary] = ReadScoreFromFile()
+	existingData.append_array(data)
+	
+	var file = FileAccess.open("user://highscores.json", FileAccess.WRITE)
+	file.store_string(JSON.stringify(existingData, "\t"))
+	file.close()
+
 func _on_visibility_changed() -> void:
 	BaseHbox = preload("res://scene/HighscoreEntrie.tscn")
 	ScoreBoardRoot = $VBoxContainer
-	var sortedScore = QuickSortScoreList(dummyData)
+	SaveScoreToFile(dummyData)
+	var sortedScore = QuickSortScoreList(ReadScoreFromFile())
 
 	for i in range(sortedScore.size()):
 		var tempBox = BaseHbox.instantiate()
 		ScoreBoardRoot.add_child(tempBox)
 		ScoreBoardRoot.get_child(i).get_child(0).text = str(i + 1)+"."
 		ScoreBoardRoot.get_child(i).get_child(2).text = sortedScore[i]["name"]
-		ScoreBoardRoot.get_child(i).get_child(4).text = str(sortedScore[i]["score"])
-		
-	#BaseHbox.queue_free()
-
+		ScoreBoardRoot.get_child(i).get_child(4).text = str(int(sortedScore[i]["score"]))
 
 func QuickSortScoreList(list: Array) -> Array:
 	if list.size() <= 1:
