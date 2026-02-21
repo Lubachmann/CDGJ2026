@@ -9,7 +9,7 @@ var sprite: AnimatedSprite2D
 
 func _ready() -> void:
 	# Get the AnimatedSprite2D node
-	sprite = get_node_or_null("../Sprite2D")
+	sprite = get_node_or_null("AnimatedSprite2D")
 
 
 func _physics_process(delta: float) -> void:
@@ -34,8 +34,14 @@ func _physics_process(delta: float) -> void:
 	# Animation logic
 	if sprite:
 		if not is_on_floor():
-			sprite.play("jump")
+			sprite.play("jumping")
 		elif abs(velocity.x) > 10.0:
 			sprite.play("walk")
 		else:
 			sprite.play("idle")
+
+		# Mirror sprite when walking left
+		if velocity.x < -10.0:
+			sprite.flip_h = true
+		elif velocity.x > 10.0:
+			sprite.flip_h = false
