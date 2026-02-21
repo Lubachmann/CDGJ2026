@@ -11,19 +11,19 @@ size = Vector2(248, 153)
 [node name="Test" type="Node2D" unique_id=2002000279]
 
 [node name="Player" parent="." unique_id=1622310491 instance=ExtResource("1_64b6k")]
-position = Vector2(666, 308)
+position = Vector2(236, 347)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1844197199]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1962964477]
-position = Vector2(661, 515)
+position = Vector2(231, 554)
 shape = SubResource("RectangleShape2D_37kl0")
 
 [node name="GoalBlock" parent="." unique_id=932530501 instance=ExtResource("3_4elfj")]
-position = Vector2(751, 380)
+position = Vector2(321, 419)
 
 [node name="TrampolineCube" parent="." unique_id=1805788512 instance=ExtResource("2_3m402")]
-position = Vector2(584, 375)
+position = Vector2(154, 414)
 
 [node name="SpikeBlocks" parent="." unique_id=1926630648 instance=ExtResource("4_mllow")]
-position = Vector2(539, 337)
+position = Vector2(109, 376)

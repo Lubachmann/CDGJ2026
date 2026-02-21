@@ -7,6 +7,7 @@ var jumpMultiplier = 1
 
 var sprite: AnimatedSprite2D
 @export var gameOverUi: Control
+@onready var gameoverScene = preload("res://scene/GameOver.tscn")
 
 func _ready() -> void:
 	# Get the AnimatedSprite2D node
@@ -66,7 +67,7 @@ func ChangeJumpMultiplier(newJumpMultiplier: float):
 	jumpMultiplier = newJumpMultiplier
 	
 func DamageTaken():
-	gameOverUi.visible = true
-	
+	add_child(gameoverScene.instantiate())
+		
 func PickupGoalToken():
 	print("Yippee")
