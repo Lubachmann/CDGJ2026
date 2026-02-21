@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dhw2fjgec1o4y"]
 
 [ext_resource type="PackedScene" uid="uid://ccc3cxph12xg1" path="res://scene/player.tscn" id="1_64b6k"]
+[ext_resource type="PackedScene" uid="uid://csu03uhfqyr3a" path="res://scene/cube_variants/trampolineCube.tscn" id="2_3m402"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_37kl0"]
 size = Vector2(248, 153)
@@ -15,3 +16,6 @@ position = Vector2(654, 315)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1962964477]
 position = Vector2(661, 515)
 shape = SubResource("RectangleShape2D_37kl0")
+
+[node name="TrampolineCube" parent="." unique_id=1805788512 instance=ExtResource("2_3m402")]
+position = Vector2(567, 391)

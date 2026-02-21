@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://csu03uhfqyr3a"]
+
+[ext_resource type="PackedScene" uid="uid://bv1vtnq8hgj2y" path="res://scene/cube.tscn" id="1_82sjm"]
+[ext_resource type="Script" uid="uid://4gpnix5xy1wb" path="res://scribt/trampoline.gd" id="2_ecqb2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2ayk4"]
+size = Vector2(15.25, 8.75)
+
+[node name="TrampolineCube" type="Node2D" unique_id=1805788512]
+
+[node name="Cube" parent="." unique_id=1392764298 instance=ExtResource("1_82sjm")]
+
+[node name="Area2D" type="Area2D" parent="Cube" unique_id=2092182754]
+script = ExtResource("2_ecqb2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Cube/Area2D" unique_id=424498486]
+position = Vector2(0, -20)
+shape = SubResource("RectangleShape2D_2ayk4")
+
+[connection signal="body_entered" from="Cube/Area2D" to="Cube/Area2D" method="_on_body_entered"]
+[connection signal="body_exited" from="Cube/Area2D" to="Cube/Area2D" method="_on_body_exited"]
