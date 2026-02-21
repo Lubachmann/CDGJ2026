@@ -8,13 +8,20 @@
 [node name="GoalBlock" type="Node2D" unique_id=932530501]
 
 [node name="Cube" parent="." unique_id=1845402874 instance=ExtResource("1_wxjos")]
-collision_layer = 3
+collision_layer = 2
 collision_mask = 3
 
+[node name="Star" type="Polygon2D" parent="Cube"]
+color = Color(1, 0.85, 0, 1)
+polygon = PackedVector2Array(-10, -3, -3, -3, 0, -10, 3, -3, 10, -3, 4, 4, 6, 11, 0, 7, -6, 11, -4, 4)
+
 [node name="Area2D" type="Area2D" parent="Cube" unique_id=1878903387]
+collision_layer = 0
+collision_mask = 3
 script = ExtResource("2_wxjos")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Cube/Area2D" unique_id=1327613419]
+scale = Vector2(40, 40)
 shape = SubResource("RectangleShape2D_jd7uw")
 
 [connection signal="body_entered" from="Cube/Area2D" to="Cube/Area2D" method="_on_body_entered"]

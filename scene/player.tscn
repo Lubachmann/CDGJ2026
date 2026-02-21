@@ -73,17 +73,19 @@ animations = [{
 }]
 
 [node name="Player" type="Node2D" unique_id=1622310491]
+scale = Vector2(0.6, 0.6)
 
-[node name="CharacterController2D" type="CharacterBody2D" parent="." unique_id=505804801 node_paths=PackedStringArray("gameOverUi")]
+[node name="CharacterController2D" type="CharacterBody2D" parent="." unique_id=505804801]
 collision_layer = 11
 collision_mask = 5
 script = ExtResource("1_onrkg")
-gameOverUi = NodePath("")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterController2D" unique_id=1804692125]
+scale = Vector2(5, 5)
 shape = SubResource("RectangleShape2D_onrkg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterController2D" unique_id=403207996]
+position = Vector2(1, -13)
 sprite_frames = SubResource("SpriteFrames_ml7e8")
 animation = &"idle"
 autoplay = "idle"
