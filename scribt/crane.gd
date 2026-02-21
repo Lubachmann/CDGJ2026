@@ -3,6 +3,7 @@ extends Node2D
 @export var speed: float = 200.0
 @export var cube_scene: PackedScene
 @export var screen_margin: float = 20.0
+@export var grid_size: float = 40.0
 
 var direction: int = 1
 
@@ -29,7 +30,10 @@ func _process(delta: float) -> void:
 func drop_cube() -> void:
 	if cube_scene:
 		var cube = cube_scene.instantiate()
-		# Position cube at the crane's position
-		cube.global_position = global_position
+		# Snap position to grid
+		var snapped_x = round(global_position.x / grid_size) * grid_size
+		cube.global_position = Vector2(snapped_x, global_position.y)
+		# Pass grid size to cube
+		cube.grid_size = grid_size
 		# Add to the root (so it's in the world, not as a child of crane)
 		get_tree().root.get_node("Main").add_child(cube)
