@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://djwygv5xm2o6q"]
+
+[ext_resource type="Script" path="res://scribt/crane.gd" id="1_crane"]
+[ext_resource type="PackedScene" uid="uid://bv1vtnq8hgj2y" path="res://scene/cube.tscn" id="2_cube"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
+size = Vector2(1200, 50)
+
+[node name="Main" type="Node2D"]
+
+[node name="Crane" type="Node2D" parent="."]
+position = Vector2(576, 100)
+script = ExtResource("1_crane")
+cube_scene = ExtResource("2_cube")
+
+[node name="CraneVisual" type="ColorRect" parent="Crane"]
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+color = Color(0.8, 0.3, 0.1, 1)
+
+[node name="Ground" type="StaticBody2D" parent="."]
+position = Vector2(576, 600)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+shape = SubResource("RectangleShape2D_ground")
+
+[node name="GroundVisual" type="ColorRect" parent="Ground"]
+offset_left = -600.0
+offset_top = -25.0
+offset_right = 600.0
+offset_bottom = 25.0
+color = Color(0.3, 0.3, 0.3, 1)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(576, 324)
