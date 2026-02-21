@@ -1,37 +1,41 @@
 [gd_scene format=3 uid="uid://djwygv5xm2o6q"]
 
-[ext_resource type="Script" path="res://scribt/crane.gd" id="1_crane"]
+[ext_resource type="Script" uid="uid://eaxf7brwrpwj" path="res://scribt/crane.gd" id="1_crane"]
 [ext_resource type="PackedScene" uid="uid://bv1vtnq8hgj2y" path="res://scene/cube.tscn" id="2_cube"]
+[ext_resource type="PackedScene" uid="uid://ccc3cxph12xg1" path="res://scene/player.tscn" id="3_wp4xf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
 size = Vector2(1200, 50)
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Node2D" unique_id=2006059295]
 
-[node name="Crane" type="Node2D" parent="."]
+[node name="Crane" type="Node2D" parent="." unique_id=626510876]
 position = Vector2(576, 100)
 script = ExtResource("1_crane")
 cube_scene = ExtResource("2_cube")
 
-[node name="CraneVisual" type="ColorRect" parent="Crane"]
+[node name="CraneVisual" type="ColorRect" parent="Crane" unique_id=1417600875]
 offset_left = -20.0
 offset_top = -20.0
 offset_right = 20.0
 offset_bottom = 20.0
 color = Color(0.8, 0.3, 0.1, 1)
 
-[node name="Ground" type="StaticBody2D" parent="."]
+[node name="Ground" type="StaticBody2D" parent="." unique_id=594195676]
 position = Vector2(576, 600)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground" unique_id=371982174]
 shape = SubResource("RectangleShape2D_ground")
 
-[node name="GroundVisual" type="ColorRect" parent="Ground"]
+[node name="GroundVisual" type="ColorRect" parent="Ground" unique_id=877921402]
 offset_left = -600.0
 offset_top = -25.0
 offset_right = 600.0
 offset_bottom = 25.0
 color = Color(0.3, 0.3, 0.3, 1)
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=416087915]
 position = Vector2(576, 324)
+
+[node name="Player" parent="." unique_id=1622310491 instance=ExtResource("3_wp4xf")]
+position = Vector2(576, 465)
