@@ -1,6 +1,6 @@
 extends RigidBody2D
 
-var grid_size: float = 40.0
+var grid_size: float = 80.0
 var is_falling: bool = true
 var check_timer: float = 0.0
 

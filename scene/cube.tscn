@@ -1,19 +1,26 @@
 [gd_scene format=3 uid="uid://bv1vtnq8hgj2y"]
 
 [ext_resource type="Script" uid="uid://cx76f87i0igru" path="res://scribt/cube.gd" id="1_cube"]
+[ext_resource type="Texture2D" uid="uid://gf2d363lw2ia" path="res://assets/IMG_1984.png" id="2_pw53m"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cube"]
-size = Vector2(40, 40)
+size = Vector2(80, 80)
 
-[node name="Cube" type="RigidBody2D"]
+[node name="Cube" type="RigidBody2D" unique_id=826800673]
+scale = Vector2(2, 2)
 script = ExtResource("1_cube")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1364665459]
 shape = SubResource("RectangleShape2D_cube")
 
-[node name="CubeVisual" type="ColorRect" parent="."]
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+[node name="CubeVisual" type="ColorRect" parent="." unique_id=1256768235]
+visible = false
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = 40.0
 color = Color(0.2, 0.6, 0.9, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=892672950]
+scale = Vector2(0.62, 0.62)
+texture = ExtResource("2_pw53m")

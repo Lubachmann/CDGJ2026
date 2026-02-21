@@ -17,15 +17,14 @@ cube_scene = ExtResource("2_cube")
 shape_scene = ExtResource("4_shape")
 
 [node name="CraneVisual" type="ColorRect" parent="Crane" unique_id=1417600875]
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = 40.0
 color = Color(0.8, 0.3, 0.1, 1)
 
 [node name="Ground" type="StaticBody2D" parent="." unique_id=594195676]
 position = Vector2(576, 600)
-collision_layer = 1
 collision_mask = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ground" unique_id=371982174]

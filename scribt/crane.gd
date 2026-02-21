@@ -1,9 +1,10 @@
 extends Node2D
 
 @export var speed: float = 200.0
+@export var cube_scene: PackedScene
 @export var shape_scene: PackedScene
 @export var screen_margin: float = 20.0
-@export var grid_size: float = 40.0
+@export var grid_size: float = 80.0
 
 var direction: int = 1
 

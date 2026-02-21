@@ -1,10 +1,11 @@
 extends RigidBody2D
 
-@export var grid_size: float = 40.0
+@export var grid_size: float = 80.0
 @export var shape_type: int = 0 # 0: single, 1: line, 2: corner, 3: vertical
 
 var is_falling: bool = true
 var check_timer: float = 0.0
+var cube_texture: Texture2D = preload("res://assets/IMG_1984.png")
 
 func _ready() -> void:
 	# Set up rigid body properties
@@ -59,15 +60,15 @@ func spawn_shape() -> void:
 		collision.shape = shape
 		collision.position = pos
 		add_child(collision)
-		
 		# Create visual
-		var cube = ColorRect.new()
-		cube.size = Vector2(grid_size, grid_size)
-		cube.position = pos - Vector2(grid_size / 2, grid_size / 2)
+		var sprite = Sprite2D.new()
+		sprite.texture = cube_texture
+		sprite.position = pos
+		sprite.scale = Vector2(0.62, 0.62)
 		
 		if i == trampoline_idx:
-			cube.color = Color(0.2, 0.9, 0.2, 1) # green trampoline
-			cube.name = "TrampolineCube"
+			sprite.modulate = Color(0.2, 0.9, 0.2, 1) # green tint for trampoline
+			sprite.name = "TrampolineCube"
 			# Add both a StaticBody2D for collision and Area2D for trampoline detection
 			var trampoline_body = StaticBody2D.new()
 			trampoline_body.position = pos
@@ -91,11 +92,10 @@ func spawn_shape() -> void:
 			area_collision.shape = area_shape
 			trampoline_area.add_child(area_collision)
 			trampoline_area.body_entered.connect(_on_trampoline_entered)
-			trampoline_area.body_exited.connect(_on_trampoline_exited)
 			add_child(trampoline_area)
 		else:
-			cube.color = Color(0.2, 0.6, 0.9, 1) # normal blue
-		add_child(cube)
+			sprite.modulate = Color(1, 1, 1, 1) # normal color
+		add_child(sprite)
 
 func _on_trampoline_entered(body: Node2D) -> void:
 	if body is CharacterBody2D:
