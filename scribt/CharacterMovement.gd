@@ -8,6 +8,7 @@ var jumpMultiplier = 1
 var sprite: AnimatedSprite2D
 @export var gameOverUi: Control
 @onready var gameoverScene = preload("res://scene/GameOver.tscn")
+@onready var alive: bool = true
 
 func _ready() -> void:
 	# Get the AnimatedSprite2D node
@@ -15,6 +16,9 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if (not alive):
+		return
+	
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -68,6 +72,7 @@ func ChangeJumpMultiplier(newJumpMultiplier: float):
 	
 func DamageTaken():
 	get_parent().add_child(gameoverScene.instantiate())
+	alive = false
 		
 func PickupGoalToken():
 	print("Yippee")

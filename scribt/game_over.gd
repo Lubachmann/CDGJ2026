@@ -1,46 +1,63 @@
 extends Control
 
-var dummyData = [
-	{"name": "smo", "score": 1000},
-	{"name": "thi", "score": 2000},
-	{"name": "guy", "score": 99999},
-	{"name": "ano", "score": 9000}
-]
+#var dummyData = {"name": "smo", "score": 1000}
 
 var BaseHbox
 var ScoreBoardRoot
+var ScoreInputRoot
 
-func ReadScoreFromFile():
-	var file = FileAccess.open("user://highscores.json", FileAccess.READ)
-	if file == null:
-		push_error("Failed to open file")
+var ScoreInputName
+var ScoreInputScore
+
+func ReadScoreFromFile() -> Array:
+	if !FileAccess.file_exists("user://highscores.json"):
 		return []
 
-	var json_string = file.get_as_text()
+	var file = FileAccess.open("user://highscores.json", FileAccess.READ)
+	if file == null:
+		return []
+
+	var text = file.get_as_text()
 	file.close()
 
-	var json = JSON.new()
-	var result = json.parse(json_string)
+	if text.strip_edges() == "":
+		return []
 
-	if result != OK:
+	var json = JSON.new()
+	var err = json.parse(text)
+	if err != OK:
 		push_error("JSON parse error")
+		return []
+
+	if typeof(json.data) != TYPE_ARRAY:
+		push_error("JSON is not an array!")
 		return []
 
 	return json.data
 	
-func SaveScoreToFile(data: Array[Dictionary]):
-	var existingData: Array[Dictionary] = ReadScoreFromFile()
-	existingData.append_array(data)
+func SaveScoreToFile(new_scores: Dictionary):
+	var existingData = ReadScoreFromFile()
 	
+	if typeof(new_scores) == TYPE_DICTIONARY:
+		existingData.append(new_scores)
+
 	var file = FileAccess.open("user://highscores.json", FileAccess.WRITE)
 	file.store_string(JSON.stringify(existingData, "\t"))
 	file.close()
 
 func _on_visibility_changed() -> void:
+	ScoreInputName = $VBoxContainer2/LineEdit
+	ScoreInputScore = $VBoxContainer2/HBoxContainer/Label2
+	
+	ScoreInputScore.text = GetScore()
+	
 	BaseHbox = preload("res://scene/HighscoreEntrie.tscn")
 	ScoreBoardRoot = $VBoxContainer
-	SaveScoreToFile(dummyData)
-	var sortedScore = QuickSortScoreList(ReadScoreFromFile())
+	#SaveScoreToFile(dummyData)
+	var sortedScore = ReadScoreFromFile()
+	sortedScore.sort_custom(func(a, b):
+		return a["score"] > b["score"]
+	)
 
 	for i in range(sortedScore.size()):
 		var tempBox = BaseHbox.instantiate()
@@ -49,23 +66,15 @@ func _on_visibility_changed() -> void:
 		ScoreBoardRoot.get_child(i).get_child(2).text = sortedScore[i]["name"]
 		ScoreBoardRoot.get_child(i).get_child(4).text = str(int(sortedScore[i]["score"]))
 
-func QuickSortScoreList(list: Array) -> Array:
-	if list.size() <= 1:
-		return list
-
-	var pivot = list[0]
-	var smaller: Array = []
-	var bigger: Array = []
-
-	for i in range(1, list.size()):
-		if list[i]["score"] > pivot["score"]:
-			bigger.append(list[i])
-		else:
-			smaller.append(list[i])
-
-	return QuickSortScoreList(bigger) + [pivot] + QuickSortScoreList(smaller)
-
+func GetScore() -> int:
+	return 0
 
 func _on_button_pressed() -> void:
+	var newScore = {
+		"name": ScoreInputName.text,
+		"score": int(ScoreInputScore.text)
+	}
+	SaveScoreToFile(newScore)
+	
 	get_tree().change_scene_to_file("res://scene/main.tscn")
 	pass # Replace with function body.
