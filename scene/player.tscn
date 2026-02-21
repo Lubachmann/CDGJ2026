@@ -74,10 +74,11 @@ animations = [{
 
 [node name="Player" type="Node2D" unique_id=1622310491]
 
-[node name="CharacterController2D" type="CharacterBody2D" parent="." unique_id=505804801]
-script = ExtResource("1_onrkg")
+[node name="CharacterController2D" type="CharacterBody2D" parent="." unique_id=505804801 node_paths=PackedStringArray("gameOverUi")]
 collision_layer = 11
 collision_mask = 5
+script = ExtResource("1_onrkg")
+gameOverUi = NodePath("")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterController2D" unique_id=1804692125]
 shape = SubResource("RectangleShape2D_onrkg")

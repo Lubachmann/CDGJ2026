@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://cdlfcrfd1kh7m"]
+
+[ext_resource type="PackedScene" uid="uid://bv1vtnq8hgj2y" path="res://scene/cube.tscn" id="1_qyuuk"]
+[ext_resource type="Script" uid="uid://ddpqgmck3w2hc" path="res://scribt/spike.gd" id="2_87pxp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7wtnn"]
+size = Vector2(42, 42)
+
+[node name="SpikeBlocks" type="Node2D" unique_id=1926630648]
+
+[node name="Cube" parent="." unique_id=362343074 instance=ExtResource("1_qyuuk")]
+
+[node name="Area2D" type="Area2D" parent="Cube" unique_id=862375464]
+script = ExtResource("2_87pxp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Cube/Area2D" unique_id=1379549651]
+shape = SubResource("RectangleShape2D_7wtnn")
+
+[connection signal="body_entered" from="Cube/Area2D" to="Cube/Area2D" method="_on_body_entered"]
