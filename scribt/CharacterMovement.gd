@@ -6,7 +6,7 @@ const JUMP_VELOCITY = -400.0
 var jumpMultiplier = 1
 
 var sprite: AnimatedSprite2D
-
+@export var gameOverUi: Control
 
 func _ready() -> void:
 	# Get the AnimatedSprite2D node
@@ -66,4 +66,7 @@ func ChangeJumpMultiplier(newJumpMultiplier: float):
 	jumpMultiplier = newJumpMultiplier
 	
 func DamageTaken():
-	print("Ouch")
+	gameOverUi.visible = true
+	
+func PickupGoalToken():
+	print("Yippee")

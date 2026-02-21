@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dmalkfvu5b5m3" path="res://scribt/CharacterMovement.gd" id="1_onrkg"]
 [ext_resource type="Texture2D" uid="uid://cudof3m44o30a" path="res://assets/IMG_3336.png" id="2_hjaqi"]
+[ext_resource type="PackedScene" uid="uid://bdqfgscqprxpa" path="res://scene/GameOver.tscn" id="3_fvtld"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_onrkg"]
 
@@ -74,10 +75,11 @@ animations = [{
 
 [node name="Player" type="Node2D" unique_id=1622310491]
 
-[node name="CharacterController2D" type="CharacterBody2D" parent="." unique_id=505804801]
-script = ExtResource("1_onrkg")
+[node name="CharacterController2D" type="CharacterBody2D" parent="." unique_id=505804801 node_paths=PackedStringArray("gameOverUi")]
 collision_layer = 11
 collision_mask = 5
+script = ExtResource("1_onrkg")
+gameOverUi = NodePath("../GameOver")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterController2D" unique_id=1804692125]
 shape = SubResource("RectangleShape2D_onrkg")
@@ -86,3 +88,6 @@ shape = SubResource("RectangleShape2D_onrkg")
 sprite_frames = SubResource("SpriteFrames_ml7e8")
 animation = &"idle"
 autoplay = "idle"
+
+[node name="GameOver" parent="." unique_id=704912557 instance=ExtResource("3_fvtld")]
+visible = false

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c6g8fqc30nmyh"]
 
 [ext_resource type="PackedScene" uid="uid://bv1vtnq8hgj2y" path="res://scene/cube.tscn" id="1_wxjos"]
-[ext_resource type="Script" path="res://scribt/goalblock.gd" id="2_js7qk"]
+[ext_resource type="Script" uid="uid://b0w1y7y1vlkt3" path="res://GoalTokenScript.gd" id="2_wxjos"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jd7uw"]
 
@@ -12,7 +12,7 @@ collision_layer = 3
 collision_mask = 3
 
 [node name="Area2D" type="Area2D" parent="Cube" unique_id=1878903387]
-script = ExtResource("2_js7qk")
+script = ExtResource("2_wxjos")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Cube/Area2D" unique_id=1327613419]
 shape = SubResource("RectangleShape2D_jd7uw")
