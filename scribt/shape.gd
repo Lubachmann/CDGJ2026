@@ -3,9 +3,26 @@ extends RigidBody2D
 @export var grid_size: float = 40.0
 @export var shape_type: int = 0 # 0: single, 1: line, 2: corner, 3: vertical
 
+var is_falling: bool = true
+var check_timer: float = 0.0
+
 func _ready() -> void:
+	# Set up rigid body properties
 	
+	collision_layer = 2
+	collision_mask = 3
 	spawn_shape()
+
+func _physics_process(delta: float) -> void:
+	if is_falling:
+		check_timer += delta
+		# Check every 0.1 seconds if shape has stopped falling
+		if check_timer >= 0.1:
+			check_timer = 0.0
+			# If velocity is very low, freeze the shape
+			if abs(linear_velocity.y) < 10.0 and abs(linear_velocity.x) < 10.0:
+				freeze = true
+				is_falling = false
 
 func spawn_shape() -> void:
 	var positions = []
@@ -25,25 +42,67 @@ func spawn_shape() -> void:
 			positions.append(Vector2(0, grid_size))
 			positions.append(Vector2(0, 2 * grid_size))
 
-	var min_x = positions[0].x
-	var max_x = positions[0].x
-	var min_y = positions[0].y
-	var max_y = positions[0].y
-	for pos in positions:
-		var cube = ColorRect.new()
-		cube.color = Color(0.2, 0.6, 0.9, 1)
-		cube.position = pos
-		cube.size = Vector2(grid_size, grid_size)
-		add_child(cube)
-		min_x = min(min_x, pos.x)
-		max_x = max(max_x, pos.x)
-		min_y = min(min_y, pos.y)
-		max_y = max(max_y, pos.y)
+	# Randomly select one index for trampoline block
+	var trampoline_idx = -1
+	if positions.size() > 1:
+		trampoline_idx = randi() % positions.size()
+	elif positions.size() == 1 and randi() % 2 == 0:
+		trampoline_idx = 0
 
-	# Add collision shape that fits the shape
-	var shape = RectangleShape2D.new()
-	shape.extents = Vector2((max_x - min_x + grid_size) / 2, (max_y - min_y + grid_size) / 2)
-	var collision = CollisionShape2D.new()
-	collision.shape = shape
-	collision.position = Vector2((min_x + max_x) / 2, (min_y + max_y) / 2)
-	add_child(collision)
+	for i in positions.size():
+		var pos = positions[i]
+		
+		# Create collision shape for stacking (not for player)
+		var shape = RectangleShape2D.new()
+		shape.size = Vector2(grid_size, grid_size)
+		var collision = CollisionShape2D.new()
+		collision.shape = shape
+		collision.position = pos
+		add_child(collision)
+		
+		# Create visual
+		var cube = ColorRect.new()
+		cube.size = Vector2(grid_size, grid_size)
+		cube.position = pos - Vector2(grid_size / 2, grid_size / 2)
+		
+		if i == trampoline_idx:
+			cube.color = Color(0.2, 0.9, 0.2, 1) # green trampoline
+			cube.name = "TrampolineCube"
+			# Add both a StaticBody2D for collision and Area2D for trampoline detection
+			var trampoline_body = StaticBody2D.new()
+			trampoline_body.position = pos
+			trampoline_body.collision_layer = 4  # Layer 3 for trampolines
+			trampoline_body.collision_mask = 3   # Collide with player
+			var trampoline_shape = RectangleShape2D.new()
+			trampoline_shape.size = Vector2(grid_size, grid_size)
+			var trampoline_collision = CollisionShape2D.new()
+			trampoline_collision.shape = trampoline_shape
+			trampoline_body.add_child(trampoline_collision)
+			add_child(trampoline_body)
+			
+			# Add Area2D for trampoline boost detection
+			var trampoline_area = Area2D.new()
+			trampoline_area.position = pos
+			trampoline_area.collision_layer = 0
+			trampoline_area.collision_mask = 11  # Detect player (layers 1, 2, 4)
+			var area_shape = RectangleShape2D.new()
+			area_shape.size = Vector2(grid_size, grid_size)
+			var area_collision = CollisionShape2D.new()
+			area_collision.shape = area_shape
+			trampoline_area.add_child(area_collision)
+			trampoline_area.body_entered.connect(_on_trampoline_entered)
+			trampoline_area.body_exited.connect(_on_trampoline_exited)
+			add_child(trampoline_area)
+		else:
+			cube.color = Color(0.2, 0.6, 0.9, 1) # normal blue
+		add_child(cube)
+
+func _on_trampoline_entered(body: Node2D) -> void:
+	if body is CharacterBody2D:
+		print("Player entered trampoline - boosting jump!")
+		body.ChangeJumpMultiplier(2)
+
+func _on_trampoline_exited(body: Node2D) -> void:
+	if body is CharacterBody2D:
+		print("Player exited trampoline - normal jump")
+		body.ChangeJumpMultiplier(1.0)
