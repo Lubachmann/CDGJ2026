@@ -57,7 +57,10 @@ func drop_cube() -> void:
 		var shape_type = randi() % 4 # 0: single, 1: line, 2: corner, 3: vertical
 		var snapped_x = round(global_position.x / grid_size) * grid_size
 		var base_y = global_position.y
-		var shape = shape_scene.instantiate()
+		
+		# Create shape as Node2D instead of RigidBody2D
+		var shape = Node2D.new()
+		shape.set_script(preload("res://scribt/shape_grid.gd"))
 		shape.global_position = Vector2(snapped_x, base_y)
 		shape.grid_size = grid_size
 		shape.shape_type = shape_type

@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://ccc3cxph12xg1" path="res://scene/player.tscn" id="3_wp4xf"]
 [ext_resource type="PackedScene" uid="uid://shape123456" path="res://scene/shape.tscn" id="4_shape"]
 [ext_resource type="Script" uid="uid://bpun7hlkan6py" path="res://scribt/camera_follow.gd" id="5_camera"]
+[ext_resource type="Script" path="res://scribt/grid_manager.gd" id="6_grid"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
 size = Vector2(50, 2000)
@@ -13,6 +14,9 @@ size = Vector2(50, 2000)
 size = Vector2(1200, 50)
 
 [node name="Main" type="Node2D" unique_id=2006059295]
+
+[node name="GridManager" type="Node2D" parent="."]
+script = ExtResource("6_grid")
 
 [node name="Crane" type="Node2D" parent="." unique_id=626510876]
 position = Vector2(576, 100)
