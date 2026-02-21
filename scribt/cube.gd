@@ -7,6 +7,7 @@ var check_timer: float = 0.0
 func _ready() -> void:
 	# Set up the cube physics
 	gravity_scale = 1.0
+	
 
 func _physics_process(delta: float) -> void:
 	if is_falling:
